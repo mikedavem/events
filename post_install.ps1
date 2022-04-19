@@ -31,6 +31,6 @@ Try {
     Write-Host "OK"
 }
 Catch{
-    #Write-Error $_.Exception.Message -ErrorAction Continue
+    Write-Host $_
     Write-Host "KO"
 }
