@@ -3,6 +3,8 @@ param(
     [PSCredential]$SqlCredential
 )
 
+$ErrorActionPreference = 'Stop'
+
 Try {
     If (-Not (Get-Module -Name dbatools)){
         Import-Module -Name dbatools
@@ -25,10 +27,10 @@ Try {
 
         $i++
     }
-    
-    Write-Host "OK"
 }
 Catch{
-    Write-Host $_
-    Write-Host "KO"
+    Write-Error $_.Exception.Message -ErrorAction Continue
+    exit 1
 }
+
+exit 0
