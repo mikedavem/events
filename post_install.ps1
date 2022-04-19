@@ -27,10 +27,10 @@ Try {
 
         $i++
     }
+
+    Write-Host "OK"
 }
 Catch{
-    Write-Error $_.Exception.Message -ErrorAction Continue
-    exit 1
+    #Write-Error $_.Exception.Message -ErrorAction Continue
+    Write-Host "KO"
 }
-
-exit 0
