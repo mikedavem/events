@@ -3,8 +3,6 @@ param(
     [PSCredential]$SqlCredential
 )
 
-$ErrorActionPreference = 'Stop'
-
 Try {
     If (-Not (Get-Module -Name dbatools)){
         Import-Module -Name dbatools
