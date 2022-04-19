@@ -1,5 +1,6 @@
 param(
-    [string]$SqlInstance
+    [string]$SqlInstance,
+    [PSCredential]$SqlCredential
 )
 
 Try {
@@ -15,7 +16,7 @@ Try {
         If ($i -eq 0){ $database = 'master'} Else { $database = 'DBA' }
 
         #Write-Host "Executing file $file - DB $database"
-        Invoke-DbaQuery -SqlInstance $SqlInstance -Database $database -File $file -EnableException 
+        Invoke-DbaQuery -SqlInstance $SqlInstance -Database $database -File $file -SqlCredential $SqlCredential -EnableException 
 
         $i++
     }
