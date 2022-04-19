@@ -12,12 +12,12 @@ Try {
     $db = Invoke-DbaQuery `
             -SqlInstance "localhost\$SqlInstance" `
             -Database 'master' `
-            -Query "SELECT name FROM sys.databases WHERE name = N'DBA'"
+            -Query "SELECT name FROM sys.databases WHERE name = N'DBA'" `
             -SqlCredential $SqlCredential `
             -EnableException 
 
     If ($db){
-        Write-Host "Datbase already exists"
+        Write-Host "Database already exists"
     }
     Else{
         $files = Get-ChildItem -Path C:\mo\DBA -Filter "*.sql"
