@@ -1,6 +1,6 @@
 param(
-    [string]$SqlInstance,
-    [PSCredential]$SqlCredential
+    [string]$ServerName,
+    [string]$InstanceName
 )
 
 Try {
@@ -8,12 +8,16 @@ Try {
         Import-Module -Name dbatools
     }
 
+    Switch ($InstanceName){
+        'MSSQLSERVER' { $sqlInstance = $ServerName }
+        default       { $sqlInstance = $ServerName + '\' + $InstanceName }
+    }
+
     # Check if DBA database exists
     $db = Invoke-DbaQuery `
-            -SqlInstance "localhost\$SqlInstance" `
+            -SqlInstance $sqlInstance `
             -Database 'master' `
             -Query "SELECT name FROM sys.databases WHERE name = N'DBA'" `
-            -SqlCredential $SqlCredential `
             -EnableException 
 
     If ($db){
@@ -29,10 +33,9 @@ Try {
             If ($i -eq 0){ $database = 'master'} Else { $database = 'DBA' }
 
             Invoke-DbaQuery `
-                -SqlInstance "localhost\$SqlInstance" `
+                -SqlInstance $sqlInstance `
                 -Database $database `
                 -File $file `
-                -SqlCredential $SqlCredential `
                 -EnableException 
 
             $i++
